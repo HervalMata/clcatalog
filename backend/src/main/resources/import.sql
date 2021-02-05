@@ -1,4 +1,4 @@
-INSERT INTO tb_category (name) VALUES ('Laços');
-INSERT INTO tb_category (name) VALUES ('Tiaras');
-INSERT INTO tb_category (name) VALUES ('Viseiras');
-INSERT INTO tb_category (name) VALUES ('Faixas');
+INSERT INTO tb_category (name, createdAt) VALUES ('Laços', NOW());
+INSERT INTO tb_category (name, createdAt) VALUES ('Tiaras', NOW());
+INSERT INTO tb_category (name, createdAt) VALUES ('Viseiras', NOW());
+INSERT INTO tb_category (name, createdAt) VALUES ('Faixas', NOW());
