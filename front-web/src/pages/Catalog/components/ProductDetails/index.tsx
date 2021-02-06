@@ -1,8 +1,9 @@
 import {Link, useParams} from "react-router-dom";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { ReactComponent as ArrowIcon } from '../../../../core/assets/images/arrow.svg';
-import { ReactComponent as ProductImage } from '../../../../core/assets/images/product.svg';
 import ProductPrice from "../../../../core/components/ProductPrice";
+import {Product} from "../../../../core/types/Product";
+import {makerequest} from "../../../../core/Utils/request";
 
 type ParamsType = {
     productId: string;
@@ -10,8 +11,13 @@ type ParamsType = {
 
 const ProductDetails = () => {
     const {productId} = useParams<ParamsType>();
+    const [product, setProduct] = useState<Product>();
 
-    console.log(productId);
+    useEffect(() => {
+        makerequest({url: `/products/${productId}`})
+            .then(response => setProduct(response.data));
+    }, [productId]);
+
 
     return (
         <div className="product-details-container">
@@ -23,19 +29,19 @@ const ProductDetails = () => {
                 <div className="row">
                     <div className="col-6 pr-5">
                         <div className="product-details-card text-center">
-                            <ProductImage className="product-details-image" />
+                            <img src={product?.imgUrl} alt={product?.name} className="product-details-image" />
                         </div>
                         <h1 className="product-details-name">
-                            Laço Nº 1
+                            {product?.name}
                         </h1>
-                        <ProductPrice price="25,00" />
+                        {product?.price && <ProductPrice price={product?.price} />}
                     </div>
                     <div className="col-6 product-details-card">
                         <h1 className="product-description-title">
                             Descrição do produto
                         </h1>
                         <p className="product-description-text">
-                            Laço maravilhoso, bonito e fofo para enfeitar a sua cabeça.
+                            {product?.description}
                         </p>
                     </div>
                 </div>
