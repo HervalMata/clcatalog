@@ -4,9 +4,11 @@ import './styles.scss';
 import {Link} from "react-router-dom";
 import {ProductResponse} from "../../core/types/Product";
 import {makerequest} from "../../core/Utils/request";
+import ProductCardLoader from "./components/Loaders/ProductCardLoader";
 
 const Catalog = () => {
     const [productsResponse, setProductsResponse] = useState<ProductResponse>();
+    const [isLoading, setIsLoading] = useState(false);
 
     console.log(productsResponse);
 
@@ -15,8 +17,10 @@ const Catalog = () => {
             page: 0,
             linesPerPage: 12
         }
+        setIsLoading(true);
         makerequest({url: '/products/', params})
-            .then(response => setProductsResponse(response.data));
+            .then(response => setProductsResponse(response.data))
+            .finally(() => setIsLoading(false));
     }, []);
 
     return (
@@ -25,11 +29,12 @@ const Catalog = () => {
                 Catálogo de Produtos
             </h1>
             <div className="catalog-products">
-                {productsResponse?.content.map(product => (
+                {isLoading ? <ProductCardLoader /> : (
+                    productsResponse?.content.map(product => (
                     <Link to={`/products/${product.id}`} key={product.id}>
                         <ProductCard product={product} />
                     </Link>
-                ))}
+                )))}
             </div>
         </div>
     );

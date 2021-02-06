@@ -12,10 +12,13 @@ type ParamsType = {
 const ProductDetails = () => {
     const {productId} = useParams<ParamsType>();
     const [product, setProduct] = useState<Product>();
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        setIsLoading(true);
         makerequest({url: `/products/${productId}`})
-            .then(response => setProduct(response.data));
+            .then(response => setProduct(response.data))
+            .finally(() => setIsLoading(false));
     }, [productId]);
 
 
