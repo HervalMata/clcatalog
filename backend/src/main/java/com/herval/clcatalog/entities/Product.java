@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -25,25 +26,26 @@ public class Product implements Serializable {
 	@Column(columnDefinition = "TEXT")
 	private String description;
 	private Double price;
-	private String imgUri;
+	private String imgUrl;
 	
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant date;
 	
 	@ManyToOne
+	@JoinColumn(name = "category_id")
 	private Category category;
 
 	public Product() {
 	}
 
-	public Product(Long id, String name, String description, Double price, String imgUri, Instant date,
+	public Product(Long id, String name, String description, Double price, String imgUrl, Instant date,
 			Category category) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
-		this.imgUri = imgUri;
+		this.imgUrl = imgUrl;
 		this.date = date;
 		this.category = category;
 	}
@@ -80,12 +82,12 @@ public class Product implements Serializable {
 		this.price = price;
 	}
 
-	public String getImgUri() {
-		return imgUri;
+	public String getImgUrl() {
+		return imgUrl;
 	}
 
-	public void setImgUri(String imgUri) {
-		this.imgUri = imgUri;
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	public Instant getDate() {
