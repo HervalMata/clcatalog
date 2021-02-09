@@ -1,5 +1,8 @@
 package com.herval.clcatalog.dto;
 
+import com.herval.clcatalog.services.exceptions.validation.UserInsertValid;
+
+@UserInsertValid
 public class UserInsertDTO extends UserDTO {
 
 	private static final long serialVersionUID = 1L;
